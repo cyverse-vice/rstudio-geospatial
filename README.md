@@ -18,23 +18,21 @@ VICE containers  | tag version                               | size   | metrics 
 
 # Instructions
 
-## Run Docker locally or on a Virtual Machine
+## Run this Docker locally or on a Virtual Machine
 
-To run the RStudio container, you must first pull them from DockerHub, or activate a [CyVerse Account](https://user.cyverse.org/services/mine).
-
-A Docker container for running RStudio is hosted on DockerHub.
+To run these containers, you must first pull them from DockerHub
 
 ```
 docker pull cyversevice/rstudio-geospatial:latest
 ```
 
 ```
-docker run -it --rm -d -p 8787:8787 -e PASSWORD=rstudio1 cyversevice/rstudio-geospatial:latest
+docker run -it --rm -v /$HOME:/app --workdir /app -p 8787:80 -e REDIRECT_URL=http://localhost:8787 cyversevice/rstudio-geospatial:latest
 ```
 
-The default username is `rstudio` and password is `rstudio1`
+The default username is `rstudio` and password is `rstudio1`. To reset the password, add the flag `-e PASSWORD=<yourpassword>` in the `docker run` statement.
 
-## Run Docker container in CyVerse VICE
+## Build your own Docker container and deploy on CyVerse VICE
 
 This container is intended to run on the CyVerse data science workbench, called [VICE](https://cyverse-visual-interactive-computing-environment.readthedocs-hosted.com/en/latest/index.html). 
 
@@ -49,9 +47,3 @@ FROM cyversevice/rstudio-geospatial:latest
 ```
 
 Follow the instructions in the [VICE manual for integrating your own tools and apps](https://cyverse-visual-interactive-computing-environment.readthedocs-hosted.com/en/latest/developer_guide/building.html).
-
-To test the container locally:
-
-```
-docker run -it --rm -v /$HOME:/app --workdir /app -p 8787:80 -e REDIRECT_URL=http://localhost:8787 cyversevice/rstudio-geospatial:latest
-```
