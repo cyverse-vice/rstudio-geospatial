@@ -1,0 +1,8 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: cyversevice/rstudio-geospatial:latest
+    steps:
+      - checkout
+      - run: rstudio-server version
