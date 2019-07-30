@@ -2,20 +2,6 @@ FROM rocker/geospatial:3.5.2
 MAINTAINER "Tyson Lee Swetnam tswetnam@cyverse.org"
 # This image uses the Rocker Geospatial RStudio image - thanks R OpenSci!
 
-# Add additional R libraries beyond Rocker Geospatial which fit our specific project needs.
-RUN install2.r --error \    
-    # Added Packages
-    PerformanceAnalytics \
-    boot \
-    devtools \
-    dlm \
-    dplyr \
-    foreign \
-    lubridate \
-    plotly \
-    truncreg \
-    ggridges 
-
 ## Install CyVerse VICE Depends
 RUN apt-get update && apt-get install -y lsb wget apt-transport-https python2.7 python-requests curl supervisor nginx gnupg2
 
@@ -28,7 +14,7 @@ ADD https://github.com/hairyhenderson/gomplate/releases/download/v2.5.0/gomplate
 RUN chmod a+x /usr/bin/gomplate
 
 # provide read and write access to Rstudio users for default R library location
-RUN chmod -R 777 /usr/local/lib/R/site-library
+# RUN chmod -R 777 /usr/local/lib/R/site-library
 
 ENV PASSWORD "rstudio1"
 RUN bash /etc/cont-init.d/userconf

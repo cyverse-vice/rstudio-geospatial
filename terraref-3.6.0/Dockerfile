@@ -1,6 +1,5 @@
-FROM cyversevice/rstudio-geospatial:3.4.2
-
-MAINTAINER Tyson Swetnam <tswetnam@cyverse.org>
+FROM cyversevice/rstudio-geospatial:3.6.0
+MAINTAINER "Tyson Lee Swetnam" tswetnam@cyverse.org
 
 RUN apt-get update -y &&  \
     apt-get install -y -qq \
@@ -18,24 +17,25 @@ RUN apt-get update -y &&  \
          nco \
          python-matplotlib  \
          python-gdal && \
-    easy_install pip && \
-    pip install \
+    pip3 install -U \
          numpy \
-         scipy \
-         matplotlib \
+         python-dateutil \
+         six \
+         requests==2.21.0 \
+         opencv-python==3.4.5.20 \
+         scipy==1.2.2 \
+         scikit-image==0.14.3 && \
+    pip3 install \
          ipython \
          jupyter \
          pandas \
          sympy \
          nose \
-         scikit-image \
-         opencv-python \
-         terrautils && \
-    pip3 install \
+         statsmodels \
          numpy \
-         scipy \
          matplotlib  \
          terrautils && \
+     apt-get autoremove -y && \
      apt-get clean && \
      rm -rf /var/lib/apt/lists/*
 
@@ -49,14 +49,14 @@ RUN install2.r --error \
     rLiDAR \
     leaflet \
     shinythemes 
+
 RUN R -e "devtools::install_github('terraref/traits')"
 RUN R -e "devtools::install_github('rstats-db/odbc')"
 RUN R -e "devtools::install_github('rstudio/blogdown')"
-RUN Rscript -e 'source("http://bioconductor.org/biocLite.R")' -e 'biocLite("EBImage")'
+RUN Rscript -e 'install.packages("BiocManager")'
 
 # Install plantcv and dependencies, only supported under Python 2.x
-RUN  pip install -U six opencv-python && cd / &&  git clone https://github.com/danforthcenter/plantcv.git && \
-      cd /plantcv && python setup.py install
+RUN cd / && git clone https://github.com/danforthcenter/plantcv.git && cd /plantcv && python3 setup.py install
    
 USER rstudio
 
