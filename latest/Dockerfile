@@ -5,7 +5,16 @@ MAINTAINER "Tyson Lee Swetnam tswetnam@cyverse.org"
 ## Install CyVerse VICE Depends
 RUN apt-get update && apt-get install -y lsb wget apt-transport-https python2.7 python-requests curl supervisor nginx gnupg2
 
-RUN wget https://files.renci.org/pub/irods/releases/4.1.10/ubuntu14/irods-icommands-4.1.10-ubuntu14-x86_64.deb && dpkg -i *.deb
+RUN apt-get install libfuse2 
+
+RUN curl "http://ftp.se.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb" -O && \
+    dpkg -i libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb && \
+    rm libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb
+
+# Install iCommands
+RUN wget https://files.renci.org/pub/irods/releases/4.1.10/ubuntu14/irods-icommands-4.1.10-ubuntu14-x86_64.deb && \
+    dpkg -i irods-icommands-4.1.10-ubuntu14-x86_64.deb && \
+    rm irods-icommands-4.1.10-ubuntu14-x86_64.deb
 
 ADD https://github.com/hairyhenderson/gomplate/releases/download/v2.5.0/gomplate_linux-amd64 /usr/bin/gomplate
 RUN chmod a+x /usr/bin/gomplate
