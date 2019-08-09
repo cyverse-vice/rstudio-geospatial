@@ -16,7 +16,9 @@ RUN apt-get update -y &&  \
          libsqliteodbc \
          nco \
          python-matplotlib  \
-         python-gdal && \
+         libgdal-dev \
+         gdal-bin \
+         python3-gdal && \
     pip3 install -U \
          numpy \
          python-dateutil \
@@ -30,10 +32,10 @@ RUN apt-get update -y &&  \
          jupyter \
          pandas \
          sympy \
+         laspy \
          nose \
          statsmodels \
-         numpy \
-         matplotlib  \
+         matplotlib \
          terrautils && \
      apt-get autoremove -y && \
      apt-get clean && \
