@@ -1,4 +1,3 @@
-
 jobs:
   build1:
     docker:
@@ -31,20 +30,20 @@ jobs:
       - checkout
       - run: rstudio-server version
    build6:
-    docker:
+     docker:
       - image: cyversevice/rstudio-geospatial:3.5.0
     steps:
       - checkout
       - run: rstudio-server version
    build7:
-    docker:
+     docker:
       - image: cyversevice/rstudio-geospatial:3.4.2
     steps:
       - checkout
       - run: rstudio-server version
 workflows:
   version: 2
-  build1_and_build2:
+  build1_to_build7:
     jobs:
       - build1
       - build2
@@ -53,5 +52,3 @@ workflows:
       - build5
       - build6
       - build7
-
-
