@@ -29,14 +29,14 @@ jobs:
     steps:
       - checkout
       - run: rstudio-server version
-   build6:
-     docker:
+  build6:
+    docker:
       - image: cyversevice/rstudio-geospatial:3.5.0
     steps:
       - checkout
       - run: rstudio-server version
-   build7:
-     docker:
+  build7:
+    docker:
       - image: cyversevice/rstudio-geospatial:3.4.2
     steps:
       - checkout
