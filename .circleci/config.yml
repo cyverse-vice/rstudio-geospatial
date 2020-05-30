@@ -1,17 +1,35 @@
 jobs:
-  build1:
+  build0:
     docker:
       - image: cyversevice/rstudio-geospatial:latest
     steps:
       - checkout
       - run: rstudio-server version
-  build2:
+  build9:
+    docker:
+      - image: cyversevice/rstudio-geospatial:4.0.0
+    steps:
+      - checkout
+      - run: rstudio-server version
+  build8:
+    docker:
+      - image: cyversevice/rstudio-geospatial:3.6.2
+    steps:
+      - checkout
+      - run: rstudio-server version      
+  build7:
+    docker:
+      - image: cyversevice/rstudio-geospatial:3.6.1
+    steps:
+      - checkout
+      - run: rstudio-server version
+  build6:
     docker:
       - image: cyversevice/rstudio-geospatial:3.6.0
     steps:
       - checkout
       - run: rstudio-server version
-  build3:
+  build5:
     docker:
       - image: cyversevice/rstudio-geospatial:3.5.3
     steps:
@@ -23,19 +41,19 @@ jobs:
     steps:
       - checkout
       - run: rstudio-server version
-  build5:
+  build3:
     docker:
       - image: cyversevice/rstudio-geospatial:3.5.1
     steps:
       - checkout
       - run: rstudio-server version
-  build6:
+  build2:
     docker:
       - image: cyversevice/rstudio-geospatial:3.5.0
     steps:
       - checkout
       - run: rstudio-server version
-  build7:
+  build1:
     docker:
       - image: cyversevice/rstudio-geospatial:3.4.2
     steps:
@@ -43,8 +61,9 @@ jobs:
       - run: rstudio-server version
 workflows:
   version: 2
-  build1_to_build7:
+  build0_to_build9:
     jobs:
+      - build0
       - build1
       - build2
       - build3
@@ -52,3 +71,5 @@ workflows:
       - build5
       - build6
       - build7
+      - build8
+      - build9
