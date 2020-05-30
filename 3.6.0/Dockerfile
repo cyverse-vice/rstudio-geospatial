@@ -4,9 +4,7 @@ MAINTAINER "Tyson Lee Swetnam tswetnam@cyverse.org"
 
 ## Install CyVerse VICE Depends
 RUN apt-get update \
-    && apt-get install -y lsb wget apt-transport-https python2.7 python-requests curl supervisor nginx gnupg2
-
-RUN apt-get install libfuse2 
+    && apt-get install -y lsb-release wget apt-transport-https python2.7 python-requests curl supervisor nginx gnupg2 libfuse2 
 
 RUN curl "http://ftp.se.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb" -O && \
     dpkg -i libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb && \
