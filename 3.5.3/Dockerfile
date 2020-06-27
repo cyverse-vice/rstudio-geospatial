@@ -3,7 +3,7 @@ MAINTAINER "Tyson Lee Swetnam tswetnam@cyverse.org"
 # This image uses the Rocker Geospatial RStudio image - thanks R OpenSci!
 
 ## Install CyVerse VICE Depends
-RUN apt-get update && apt-get install -y lsb wget apt-transport-https python2.7 python-requests curl supervisor nginx gnupg2
+RUN apt-get update && apt-get install -y lsb wget apt-transport-https python2.7 python-requests curl supervisor nginx gnupg2 nano htop
 
 RUN apt-get install libfuse2 
 
