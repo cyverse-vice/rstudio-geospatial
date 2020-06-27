@@ -4,7 +4,7 @@ MAINTAINER "Tyson Lee Swetnam tswetnam@cyverse.org"
 
 ## Install CyVerse VICE Depends
 RUN apt-get install -y software-properties-common &&  apt-add-repository universe
-RUN apt-get update && apt-get install -y lsb-release wget apt-transport-https curl supervisor nginx gnupg2 libfuse2
+RUN apt-get update && apt-get install -y lsb-release wget apt-transport-https curl supervisor nginx gnupg2 libfuse2 htop nano
 
 ###### iRODS depends on Python 2 which is no longer supported in Ubuntu 20.04 ######
 ## Install irods-icommands + depends
