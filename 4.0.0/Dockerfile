@@ -1,4 +1,4 @@
-FROM rocker/geospatial:4.0.0
+FROM rocker/geospatial:4.0.0-ubuntu18.04
 MAINTAINER "Tyson Lee Swetnam tswetnam@cyverse.org"
 # This image uses the Rocker Geospatial RStudio image - thanks R OpenSci!
 
