@@ -32,5 +32,6 @@ COPY supervisor-nginx.conf /etc/supervisor/conf.d/nginx.conf
 COPY supervisor-rstudio.conf /etc/supervisor/conf.d/rstudio.conf
 
 ENV REDIRECT_URL "http://localhost/"
+ENV DISABLE_AUTH "true"
 
 ENTRYPOINT ["/usr/local/bin/run.sh"]
