@@ -10,9 +10,7 @@ RUN curl "http://ftp.se.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t
     rm libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb
 
 ### iCommands
-RUN wget -qO - https://packages.irods.org/irods-signing-key.asc | apt-key add - \
-    && echo "deb [arch=amd64] https://packages.irods.org/apt/ bionic main" | tee /etc/apt/sources.list.d/renci-irods.list \
-    && apt-get update && apt-get install -y irods-runtime irods-icommands
+RUN wget https://files.renci.org/pub/irods/releases/4.1.10/ubuntu14/irods-icommands-4.1.10-ubuntu14-x86_64.deb && dpkg -i *.deb
 
 ADD https://github.com/hairyhenderson/gomplate/releases/download/v2.5.0/gomplate_linux-amd64 /usr/bin/gomplate
 RUN chmod a+x /usr/bin/gomplate
@@ -32,6 +30,16 @@ COPY supervisor-nginx.conf /etc/supervisor/conf.d/nginx.conf
 COPY supervisor-rstudio.conf /etc/supervisor/conf.d/rstudio.conf
 
 ENV REDIRECT_URL "http://localhost/"
-ENV DISABLE_AUTH "true"
+
+ARG LOCAL_USER=rstudio
+ARG PRIV_CMDS='/bin/ch*,/bin/cat,/bin/gunzip,/bin/tar,/bin/mkdir,/bin/ps,/bin/mv,/bin/cp,/usr/bin/apt*,/usr/bin/pip*,/bin/yum'
+
+RUN if [ -x /usr/bin/apt ]; then \
+      apt-get update && apt-get -y install sudo && rm -rf /var/lib/apt/lists/*; \
+    elif [ -x /bin/yum ]; then \
+      yum -y update && yum -y install sudo && yum clean all; \
+    fi
+
+RUN echo "$LOCAL_USER	ALL=NOPASSWD: $PRIV_CMDS" >> /etc/sudoers
 
 ENTRYPOINT ["/usr/local/bin/run.sh"]
