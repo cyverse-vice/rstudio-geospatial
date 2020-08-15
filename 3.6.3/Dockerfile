@@ -1,6 +1,21 @@
 FROM rocker/geospatial:3.6.3
+# This image uses the Rocker-Project Geospatial RStudio image - thanks R OpenSci and Rocker!
+
+# Build-time metadata as defined at http://label-schema.org
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="CyVerse RStudio Geospatial" \
+      org.label-schema.description="Built from Rocker-Project RStudio Geospatial, additional depends for CyVerse K8s workbench" \
+      org.label-schema.url="https://cyverse.org" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="e.g. https://github.com/cyverse-vice/rstudio-geospatial" \
+      org.label-schema.vendor="CyVerse" \
+      org.label-schema.version=$VERSION \
+      org.label-schema.schema-version="1.0"
+
 MAINTAINER "Tyson Lee Swetnam tswetnam@cyverse.org"
-# This image uses the Rocker Geospatial RStudio image - thanks R OpenSci!
 
 ## Install CyVerse VICE Depends
 RUN apt-get update && apt-get install -y lsb-release wget apt-transport-https python2.7 python-requests curl supervisor nginx gnupg2 libfuse2 nano htop
