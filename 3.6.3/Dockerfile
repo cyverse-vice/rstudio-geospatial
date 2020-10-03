@@ -18,7 +18,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 MAINTAINER "Tyson Lee Swetnam tswetnam@cyverse.org"
 
 ## Install CyVerse VICE Depends
-RUN apt-get update && apt-get install -y lsb-release wget apt-transport-https python2.7 python-requests curl supervisor nginx gnupg2 libfuse2 nano htop
+RUN apt-get update && apt-get install -y lsb-release wget apt-transport-https python2.7 python-requests curl supervisor nginx gnupg2 libfuse2 nano htop xorg-dev
 
 RUN curl "http://ftp.se.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb" -O && \
     dpkg -i libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb && \
@@ -32,6 +32,11 @@ RUN chmod a+x /usr/bin/gomplate
 
 # provide read and write access to Rstudio users for default R library location
 RUN chmod -R 777 /usr/local/lib/R/site-library
+
+# lidR depends
+RUN apt-get update
+RUN apt-get install -y libgdal-dev libgeos++-dev libudunits2-dev libproj-dev libx11-dev libgl1-mesa-dev libglu1-mesa-dev libfreetype6-dev libnode-dev libxt-dev libfftw3-dev 
+RUN apt-get install -y bzip2 cairo fontconfig freetype fribidi glib2 harfbuzz libX11 libXext libXt libcurl libicu libjpeg libpng libtiff libtirpc libxcrypt ncurses pango pcre2 readline tcl tk xz zlib
 
 ENV PASSWORD "rstudio1"
 RUN bash /etc/cont-init.d/userconf
