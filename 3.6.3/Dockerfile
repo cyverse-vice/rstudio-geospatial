@@ -36,7 +36,7 @@ RUN chmod -R 777 /usr/local/lib/R/site-library
 # lidR depends
 RUN apt-get update
 RUN apt-get install -y libgdal-dev libgeos++-dev libudunits2-dev libproj-dev libx11-dev libgl1-mesa-dev libglu1-mesa-dev libfreetype6-dev libnode-dev libxt-dev libfftw3-dev 
-RUN apt-get install -y bzip2 cairo fontconfig freetype fribidi glib2 harfbuzz libX11 libXext libXt libcurl libicu libjpeg libpng libtiff libtirpc libxcrypt ncurses pango pcre2 readline tcl tk xz zlib
+#RUN apt-get install -y bzip2 cairo fontconfig freetype fribidi glib2 harfbuzz libX11 libXext libXt libcurl libicu libjpeg libpng libtiff libtirpc libxcrypt ncurses pango pcre2 readline tcl tk xz zlib
 
 ENV PASSWORD "rstudio1"
 RUN bash /etc/cont-init.d/userconf
