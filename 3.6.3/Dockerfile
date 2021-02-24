@@ -57,4 +57,8 @@ RUN if [ -x /usr/bin/apt ]; then \
 
 RUN echo "$LOCAL_USER	ALL=NOPASSWD: $PRIV_CMDS" >> /etc/sudoers
 
+USER rstudio
+RUN echo 'export PS1="[\u@cyverse] \w $ "' >> /home/rstudio/.bash_profile
+USER root
+
 ENTRYPOINT ["/usr/local/bin/run.sh"]
