@@ -17,8 +17,8 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 
 MAINTAINER "Tyson Lee Swetnam tswetnam@cyverse.org"
 
-## Install CyVerse VICE Depends
-RUN apt-get update && apt-get install -y lsb-release wget apt-transport-https python2.7 python-requests curl supervisor nginx gnupg2 libfuse2 nano htop
+# Install a few dependencies for iCommands, text editing, and monitoring instances
+RUN apt-get --allow-releaseinfo-change update && apt-get install -y lsb-release wget apt-transport-https curl supervisor nginx gnupg2 libfuse2 nano htop gcc less nodejs software-properties-common apt-utils glances
 
 RUN curl "http://ftp.se.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb" -O && \
     dpkg -i libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb && \
@@ -34,7 +34,7 @@ RUN chmod a+x /usr/bin/gomplate
 RUN chmod -R 777 /usr/local/lib/R/site-library
 
 ENV PASSWORD "rstudio1"
-RUN bash /etc/cont-init.d/userconf
+#RUN bash /etc/cont-init.d/userconf
 
 COPY run.sh /usr/local/bin/run.sh
 RUN chmod +x /usr/local/bin/run.sh
@@ -58,7 +58,7 @@ RUN if [ -x /usr/bin/apt ]; then \
 RUN echo "$LOCAL_USER	ALL=NOPASSWD: $PRIV_CMDS" >> /etc/sudoers
 
 USER rstudio
-RUN echo 'export PS1="[\u@cyverse] \w $ "' >> /home/rstudio/.bash_profile
+RUN echo 'export PS1="[\u@cyverse] \w $ "' >> /home/rstudio/.bashrc
 USER root
 
 ENTRYPOINT ["/usr/local/bin/run.sh"]
