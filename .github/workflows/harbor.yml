@@ -1,0 +1,86 @@
+name: harbor
+
+on:
+  push:
+    branches: main
+
+jobs:
+  
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+      
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+      
+      - name: Login to harbor
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          registry: harbor.cyverse.org
+          username: ${{ secrets.HARBOR_USERNAME }}
+          password: ${{ secrets.HARBOR_PASSWORD }}
+      
+      - name: Build and push latest
+        id: docker_build_latest
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: latest 
+          file: latest/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: harbor.cyverse.org/vice/rstudio/geospatial:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+      
+      - name: Build and push v4.0.5
+        id: docker_build_four_zero_five
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: 4.0.5
+          file: 4.0.5/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: harbor.cyverse.org/vice/rstudio/geospatial:4.0.5
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Build and push v4.0.0-ubuntu18.04
+        id: docker_build_four_zero_zero
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: 4.0.0-ubuntu18.04
+          file: 4.0.0-ubuntu18.04/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: harbor.cyverse.org/vice/rstudio/geospatial:4.0.0-ubuntu18.04
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Build and push v3.6.3
+        id: docker_build_three_six_three
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: 3.6.3
+          file: 3.6.3/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: harbor.cyverse.org/vice/rstudio/geospatial:3.6.3
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
