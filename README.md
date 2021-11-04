@@ -23,7 +23,7 @@ quick launch | size |
 To run these containers, you must first pull them from DockerHub
 
 ```
-docker pull docker pull harbor.cyverse.org/vice/rstudio/geospatial:latest
+docker pull harbor.cyverse.org/vice/rstudio/geospatial:latest
 ```
 
 ```
