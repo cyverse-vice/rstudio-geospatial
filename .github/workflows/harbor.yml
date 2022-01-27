@@ -45,30 +45,6 @@ jobs:
           tags: harbor.cyverse.org/vice/rstudio/geospatial:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-      
-      - name: Build and push v4.0.5
-        id: docker_build_four_zero_five
-        uses: docker/build-push-action@v2.7.0
-        with:
-          context: 4.0.5
-          file: 4.0.5/Dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          push: true
-          tags: harbor.cyverse.org/vice/rstudio/geospatial:4.0.5
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-
-      - name: Build and push v4.0.0-ubuntu18.04
-        id: docker_build_four_zero_zero
-        uses: docker/build-push-action@v2.7.0
-        with:
-          context: 4.0.0-ubuntu18.04
-          file: 4.0.0-ubuntu18.04/Dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          push: true
-          tags: harbor.cyverse.org/vice/rstudio/geospatial:4.0.0-ubuntu18.04
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
