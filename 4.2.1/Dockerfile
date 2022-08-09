@@ -1,4 +1,4 @@
-FROM ghcr.io/rocker-org/geospatial:latest
+FROM ghcr.io/rocker-org/geospatial:4.2.1
 # This image uses the Rocker-Project Geospatial RStudio image - thanks R OpenSci and Rocker!
 
 # Build-time metadata as defined at http://label-schema.org
