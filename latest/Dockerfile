@@ -67,7 +67,7 @@ RUN echo "$LOCAL_USER	ALL=NOPASSWD: $PRIV_CMDS" >> /etc/sudoers
 # Install GoCommands
 # https://learning.cyverse.org/ds/gocommands/
 RUN cd /usr/local/bin && \
-    curl -L -o gocmd.tar.gz https://github.com/cyverse/gocommands/releases/download/v0.6.0/gocmd-v0.6.0-linux-amd64.tar.gz && \
+    curl -L -o gocmd.tar.gz https://github.com/cyverse/gocommands/releases/download/v0.6.3/gocmd-v0.6.3-linux-amd64.tar.gz && \
     tar zxvf gocmd.tar.gz && rm gocmd.tar.gz
 
 USER rstudio
