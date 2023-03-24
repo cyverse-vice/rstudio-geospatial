@@ -62,8 +62,13 @@ RUN if [ -x /usr/bin/apt ]; then \
     elif [ -x /bin/yum ]; then \
       yum -y update && yum -y install sudo && yum clean all; \
     fi
-
 RUN echo "$LOCAL_USER	ALL=NOPASSWD: $PRIV_CMDS" >> /etc/sudoers
+
+# Install GoCommands
+# https://learning.cyverse.org/ds/gocommands/
+RUN cd /usr/local/bin && \
+    curl -L -o gocmd.tar.gz https://github.com/cyverse/gocommands/releases/download/v0.6.0/gocmd-v0.6.0-linux-arm64.tar.gz && \
+    tar zxvf gocmd.tar.gz && rm gocmd.tar.gz
 
 USER rstudio
 RUN echo 'export PS1="[\u@cyverse] \w $ "' >> /home/rstudio/.bashrc
