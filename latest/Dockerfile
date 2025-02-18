@@ -64,11 +64,15 @@ RUN if [ -x /usr/bin/apt ]; then \
     fi
 RUN echo "$LOCAL_USER	ALL=NOPASSWD: $PRIV_CMDS" >> /etc/sudoers
 
-# Install GoCommands
-# https://learning.cyverse.org/ds/gocommands/
-RUN cd /usr/local/bin && \
-    curl -L -o gocmd.tar.gz https://github.com/cyverse/gocommands/releases/download/v0.6.3/gocmd-v0.6.3-linux-amd64.tar.gz && \
-    tar zxvf gocmd.tar.gz && rm gocmd.tar.gz
+# Install GoCommmands
+RUN cd /usr/local/bin/ && \
+   GOCMD_VER=$(curl -L -s https://raw.githubusercontent.com/cyverse/gocommands/main/VERSION.txt); curl -L -s https://github.com/cyverse/gocommands/releases/download/${GOCMD_VER}/gocmd-${GOCMD_VER}-linux-amd64.tar.gz | tar zxvf -
+
+# Install GitHub CLI
+RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/etc/apt/trusted.gpg.d/githubcli-archive-keyring.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/trusted.gpg.d/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" > /etc/apt/sources.list.d/github-cli.list && \
+    apt update && \
+    apt install gh
 
 USER rstudio
     
