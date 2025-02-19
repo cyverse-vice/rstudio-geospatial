@@ -57,12 +57,10 @@ ENV REDIRECT_URL "http://localhost/"
 ARG LOCAL_USER=rstudio
 ARG PRIV_CMDS='/bin/ch*,/bin/cat,/bin/gunzip,/bin/tar,/bin/mkdir,/bin/ps,/bin/mv,/bin/cp,/usr/bin/apt*,/usr/bin/pip*,/bin/yum'
 
-RUN if [ -x /usr/bin/apt ]; then \
-      apt-get update && apt-get -y install sudo && rm -rf /var/lib/apt/lists/*; \
-    elif [ -x /bin/yum ]; then \
-      yum -y update && yum -y install sudo && yum clean all; \
-    fi
-RUN echo "$LOCAL_USER	ALL=NOPASSWD: $PRIV_CMDS" >> /etc/sudoers
+RUN apt-get update && \
+    apt-get install -y sudo && \
+    echo "rstudio ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install GoCommmands
 RUN cd /usr/local/bin/ && \
@@ -74,9 +72,16 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | s
     apt update && \
     apt install gh
 
-USER rstudio
-    
-RUN echo 'export PS1="[\u@cyverse] \w $ "' >> /home/rstudio/.bashrc
-USER root
+RUN mkdir -p /var/log/supervisor && \
+    touch /var/log/supervisor/supervisord.log && \
+    chown -R 1000:1000 /etc/nginx /var/log/supervisor 
 
+RUN setcap 'cap_net_bind_service=+ep' /usr/bin/supervisord
+
+USER rstudio
+
+ RUN echo 'export PS1="[\u@cyverse] \w $ "' >> /home/rstudio/.bashrc
+    
+WORKDIR /home/rstudio/data-store
+    
 ENTRYPOINT ["/usr/local/bin/run.sh"]

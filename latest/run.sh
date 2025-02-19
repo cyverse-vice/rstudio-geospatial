@@ -1,7 +1,7 @@
 #!/bin/sh
 
-touch $HOME/.irods/irods_environment.json
-echo '{"irods_host": "data.cyverse.org", "irods_port": 1247, "irods_user_name": "$IPLANT_USER", "irods_zone_name": "iplant"}' >> $HOME/.irods/irods_environment.json
+touch /home/rstudio/.irods/irods_environment.json
+echo '{"irods_host": "data.cyverse.org", "irods_port": 1247, "irods_user_name": "$IPLANT_USER", "irods_zone_name": "iplant"}' >> /home/rstudio/.irods/irods_environment.json
 
 echo "export PATH=$PATH:/opt/conda/bin" >> ~/.bashrc
 
@@ -14,4 +14,5 @@ if [ -d /data-store/iplant/home/$IPLANT_USER/.ssh ]; then
 fi
 
 gomplate -f /nginx.conf.tmpl -o /etc/nginx/nginx.conf
-supervisord -c /etc/supervisor/supervisord.conf -n
+# Drop privileges to rstudio user to run the services
+sudo supervisord -c /etc/supervisor/supervisord.conf -n
