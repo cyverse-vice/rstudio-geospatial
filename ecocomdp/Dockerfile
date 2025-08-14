@@ -19,11 +19,12 @@ RUN R -e "install.packages(c('eml', 'vegan', 'jqr'), \
 #    repos='https://cran.rstudio.com/', dependencies=TRUE)"
 
 # EcocomDP development version
+
 RUN R -e "remotes::install_github('sokole/ecocomDP@esa-2025')"
 
 RUN R -e "remotes::install_github('NEONScience/neon-utilities/neonUtilities@main')"
 
-RUN R -e "install.packages(c('neonUtilities', 'arrow', 'neonOS', 'ecocomDP'), \
+RUN R -e "install.packages(c('arrow', 'neonOS', 'ecocomDP'), \
     repos='https://cran.rstudio.com/', dependencies=TRUE)"
 
 USER root
