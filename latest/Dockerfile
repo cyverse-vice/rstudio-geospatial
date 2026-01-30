@@ -26,13 +26,17 @@ RUN apt update && apt install -y apt-transport-https \
     htop \
     less \
     libfuse2 \
-    lsb-release \  
+    lsb-release \
     nano \
     nginx \
-    nodejs \
     software-properties-common \
-    supervisor \ 
+    supervisor \
     wget
+
+# Install Node.js 20.x with npm
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Add gomplate
 ADD https://github.com/hairyhenderson/gomplate/releases/download/v3.11.5/gomplate_linux-amd64 /usr/bin/gomplate
