@@ -10,9 +10,9 @@ Based on the [Rocker-Project.org](https://rocker-project.org) Docker [RStudio `g
 
 ## Quick Launch
 
-| Environment | Size |
-|-------------|------|
-| <a href="https://de.cyverse.org/apps/de/3b5f5b16-19a5-11ed-b38a-008cfa5ae621/launch" target="_blank"><img src="https://img.shields.io/badge/Geospatial-latest-blue?style=plastic&logo=rstudio"></a> | [![SIZE](https://img.shields.io/docker/image-size/cyversevice/rstudio-geospatial/latest.svg)](https://img.shields.io/docker/image-size/cyversevice/rstudio-geospatial/latest) |
+| Version | Launch |
+|---------|--------|
+| latest | <a href="https://de.cyverse.org/apps/de/4470d870-1add-11ef-8369-008cfa5ae621/launch" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/Geospatial-latest-blue?style=plastic&logo=rstudio"></a> |
 
 ## Features
 
