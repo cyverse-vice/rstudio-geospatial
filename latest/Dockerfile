@@ -87,9 +87,12 @@ RUN echo 'export PS1="[\u@cyverse] \w $ "' >> /home/rstudio/.bashrc
 
 # Install AI tools (Claude Code, Gemini CLI, OpenAI Codex)
 USER rstudio
+# Install Claude Code using official installer
+RUN curl -fsSL https://claude.ai/install.sh | bash
+# Install Gemini CLI and OpenAI Codex via npm
 RUN npm config set prefix /home/rstudio/.npm-global && \
     export PATH=/home/rstudio/.npm-global/bin:$PATH && \
-    npm install -g @anthropic-ai/claude-code @google/gemini-cli @openai/codex
+    npm install -g @google/gemini-cli @openai/codex
 ENV PATH="/home/rstudio/.npm-global/bin:${PATH}"
 USER root
 
