@@ -46,7 +46,7 @@ jobs:
           file: latest/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: harbor.cyverse.org/vice/rstudio/verse:latest
+          tags: harbor.cyverse.org/vice/rstudio/geospatial:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
