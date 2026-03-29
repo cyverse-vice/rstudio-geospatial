@@ -74,8 +74,8 @@ RUN cd /usr/local/bin/ && \
 # Install GitHub CLI
 RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/etc/apt/trusted.gpg.d/githubcli-archive-keyring.gpg && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/trusted.gpg.d/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" > /etc/apt/sources.list.d/github-cli.list && \
-    apt update && \
-    apt install gh
+    apt-get update && \
+    apt-get install -y gh && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/log/supervisor && \
     touch /var/log/supervisor/supervisord.log && \
@@ -87,12 +87,10 @@ RUN echo 'export PS1="[\u@cyverse] \w $ "' >> /home/rstudio/.bashrc
 
 # Install AI tools (Claude Code, Gemini CLI, OpenAI Codex)
 USER rstudio
-# Install Claude Code using official installer
-RUN curl -fsSL https://claude.ai/install.sh | bash
-# Install Gemini CLI and OpenAI Codex via npm
 RUN npm config set prefix /home/rstudio/.npm-global && \
     export PATH=/home/rstudio/.npm-global/bin:$PATH && \
-    npm install -g @google/gemini-cli @openai/codex
+    npm install -g @anthropic-ai/claude-code @google/gemini-cli @openai/codex && \
+    npm cache clean --force
 ENV PATH="/home/rstudio/.npm-global/bin:${PATH}"
 USER root
 
