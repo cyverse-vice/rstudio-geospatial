@@ -92,7 +92,7 @@ RUN npm config set prefix /home/rstudio/.npm-global && \
     npm cache clean --force
 
 # Install OpenCode (https://opencode.ai/)
-RUN curl -fsSL https://opencode.ai/install | bash
+RUN curl -fsSL https://opencode.ai/install | bash -s -- --no-modify-path
 
 ENV PATH="/home/rstudio/.npm-global/bin:/home/rstudio/.opencode/bin:${PATH}"
 USER root
