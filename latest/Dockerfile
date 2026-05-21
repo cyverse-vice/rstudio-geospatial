@@ -85,16 +85,21 @@ RUN setcap 'cap_net_bind_service=+ep' /usr/bin/supervisord
 
 RUN echo 'export PS1="[\u@cyverse] \w $ "' >> /home/rstudio/.bashrc
 
-# Install AI tools (Claude Code, Gemini CLI, OpenAI Codex)
+# Install AI tools (Claude Code, OpenAI Codex)
 USER rstudio
 RUN npm config set prefix /home/rstudio/.npm-global && \
-    npm install -g @anthropic-ai/claude-code @google/gemini-cli @openai/codex && \
+    npm install -g @anthropic-ai/claude-code @openai/codex && \
     npm cache clean --force
+
+# Install Antigravity CLI (replaces deprecated Google Gemini CLI — deadline June 18 2026)
+# https://antigravity.google/blog/introducing-google-antigravity-cli
+# Binary: agy, installed to ~/.local/bin
+RUN curl -fsSL https://antigravity.google/cli/install.sh | bash
 
 # Install OpenCode (https://opencode.ai/)
 RUN curl -fsSL https://opencode.ai/install | bash -s -- --no-modify-path
 
-ENV PATH="/home/rstudio/.npm-global/bin:/home/rstudio/.opencode/bin:${PATH}"
+ENV PATH="/home/rstudio/.local/bin:/home/rstudio/.npm-global/bin:/home/rstudio/.opencode/bin:${PATH}"
 USER root
 
 WORKDIR /home/rstudio/data-store
